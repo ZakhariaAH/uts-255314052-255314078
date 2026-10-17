@@ -8,7 +8,7 @@ export function KartuBuku({judul, penulis, tahun, linkRef}) {
         <p>{penulis}</p>
         <p>{tahun}</p>
         {/*Deskripsi singkat*/}
-        <p>Deskripsi singkat tentang buku ini.</p>
+        <button type="button">baca deskripsi singkat tentang buku ini.</button>
       </div>
     </div>
   );

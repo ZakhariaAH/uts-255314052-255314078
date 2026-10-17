@@ -46,24 +46,24 @@ function App() {
           <h1>Daftar Buku</h1>
         </div>
 
-        <div className="grid-buku-navigasi">
-          2
-        </div>
-        <div className="grid-buku-item">
-          {listBuku.length > 0 ? (
-            listBuku.map((item, index) => (
-              <div key={index}>
-                <KartuBuku
-                  judul={item.judul}
-                  penulis={item.penulis}
-                  tahun={item.tahun}
-                  linkRef={item.linkRef}
-                />
-              </div>
-            ))
-          ) : (
-            <p>Tidak ada buku yang tersedia.</p>
-          )}
+        <div className="contents">
+          <div className="grid-buku-navigasi">2</div>
+          <div className="grid-buku-item">
+            {listBuku.length > 0 ? (
+              listBuku.map((item, index) => (
+                <div key={index}>
+                  <KartuBuku
+                    judul={item.judul}
+                    penulis={item.penulis}
+                    tahun={item.tahun}
+                    linkRef={item.linkRef}
+                  />
+                </div>
+              ))
+            ) : (
+              <p>Tidak ada buku yang tersedia.</p>
+            )}
+          </div>
         </div>
         <div className="grid-buku-footer">
           <p>Footer</p>
