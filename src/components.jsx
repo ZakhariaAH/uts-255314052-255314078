@@ -13,3 +13,4 @@ export function KartuBuku({judul, penulis, tahun, linkRef}) {
     </div>
   );
 }
+
