@@ -62,6 +62,9 @@ function App() {
     /*State untuk mengatur apakah suatu form untuk menambahkan buku ditampilkan atau tidak */
   }
   const [tampil, setTampil] = useState(false);
+  {/*State untuk menyimpan judul buku */}
+  const [judul, setJudul] = useState("")
+
   {
     /*fungsi untuk menghandle perubahan value di form */
   }
@@ -101,11 +104,15 @@ function App() {
 
   //variabel yang menyimpan array dari buku yang ditampilkan
   const bukuTampil = listBuku.filter((item) => {
-    if (filter === "semua") {
-      return true; //return true, jadinya menampilkan semua
-    } else {
-      return item.kat === filter; //return hanya yang kategorinya sama dengan filter
-    }
+    //cek kategori
+    const lolosKategori = filter === "semua" ? true : item.kat === filter;
+
+    //cek buku
+    const judulBuku = item.judul.toLowerCase().trim();//mengambil judul dari list buku
+    const yangDiCari = judul.toLowerCase().trim(); //mengambil state judul yang sekarang
+    const boolJudulCari = judulBuku.includes(yangDiCari);//cek apakah yangDiCari ada di judulBuku
+
+    return lolosKategori && boolJudulCari;
   });
   return (
     <>
@@ -123,7 +130,7 @@ function App() {
               jika tidak, maka tidak menampilkan form */}
             </button>
 
-            {tampil && (
+            {tampil && (//jika tampil true maka tampilkan form
               <form
                 className="form-tambah-buku"
                 onSubmit={inputForm}
@@ -197,6 +204,11 @@ function App() {
               <button type="button" onClick={() => setFilter("non-fiksi")}>
                 Non-Fiksi
               </button>
+            </div>
+
+            <div className="pencarian-wrapper">
+              <label><h3>Cari judul buku:</h3></label>
+              <input type="text" placeholder="Contoh: Harry Potter" name="judul" value={judul} onChange={(event) => setJudul(event.target.value)}></input>
             </div>
           </div>
           <div className="grid-buku-item">
