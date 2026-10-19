@@ -1,5 +1,6 @@
 body {
-width: 100vh;
-height: 100vh;
-background-color: #f3f5f7;
+width: auto;
+height:auto;
+background-color: #002d5b9b;
+max-height: 1280px;
 }
