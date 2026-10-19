@@ -23,7 +23,7 @@ export function KartuBuku({ judul, penulis, tahun, linkRef, index }) {
 export function Footer() {
   return (
     <div className="grid-buku-footer">
-      <p>Footer</p>
+      <p>© [2026] [Zakharia and Rey]. All rights reserved.</p>
     </div>
   );
 }
@@ -31,7 +31,7 @@ export function Footer() {
 export function Header() {
   return (
     <div className="grid-buku-header">
-      <h1>Daftar Buku</h1>
+      <h1>Katalog Buku</h1>
     </div>
   );
 }

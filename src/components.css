@@ -106,3 +106,11 @@ button:hover {
 .grid-buku-footer p {
     text-align: center;
 }
+.grid-buku-header {
+  background-color: #293b4b;
+  border-radius: 8px 8px 8px 0;
+}
+.grid-buku-header h1{
+  
+  text-align: center;
+}
