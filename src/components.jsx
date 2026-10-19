@@ -1,7 +1,7 @@
 import "./components.css";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-export function KartuBuku({ judul, penulis, tahun, linkRef, index}) {
+import { useState, useEffect } from "react";
+export function KartuBuku({ judul, penulis, tahun, linkRef, index }) {
   return (
     <div className="kartu-buku">
       <img src={linkRef} alt="Tidak Ada Gambar" className="gambar" />
@@ -11,7 +11,9 @@ export function KartuBuku({ judul, penulis, tahun, linkRef, index}) {
         <p>{tahun}</p>
         {/*Deskripsi singkat*/}
         <Link to={`/buku/${index}`}>
-        <button type="button">baca deskripsi singkat tentang buku ini.</button>
+          <button type="button">
+            baca deskripsi singkat tentang buku ini.
+          </button>
         </Link>
       </div>
     </div>
@@ -47,49 +49,59 @@ export function Contents() {
     kat: "fiksi",
   });
   const [filter, setFilter] = useState("semua"); //Membuat use state untuk filter, nanti ada Semua/Fiksi/Non-FIksi
-  /*Membuat useState dengan nilai awalnya 5 buku */
-  const [listBuku, setListBuku] = useState([
-    {
-      judul: "Bumi Manusia",
-      penulis: "Pramoedya Ananta Toer",
-      tahun: "1980",
-      linkRef:
-        "https://static.mizanstore.com/d/img/book/cover/bumi-manusia.jpg",
-      kat: "fiksi",
-    },
-    {
-      judul: "Laskar Pelangi",
-      penulis: "Andrea Hirata",
-      tahun: "2005",
-      linkRef:
-        "https://ensiklopedia.kemendikdasmen.go.id/sastra/media/image/Karya-LASKAR_PELANGI.png",
-      kat: "non-fiksi",
-    },
-    {
-      judul: "Reverend Insanity",
-      penulis: "Gu Zhen Ren",
-      tahun: "2015",
-      linkRef:
-        "https://cdna.artstation.com/p/assets/images/images/085/188/238/large/ullaseu-imadfge.jpg?1740166168",
-      kat: "fiksi",
-    },
-    {
-      judul: "The Great Gatsby",
-      penulis: "F. Scott Fitzgerald",
-      tahun: "1925",
-      linkRef:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSatXfbE5JcI50jTgSP7AeP9Ll9l8UfoOy2BhbcPIP_JQ&s=10",
-      kat: "non-fiksi",
-    },
-    {
-      judul: "To Kill a Mockingbird",
-      penulis: "Harper Lee",
-      tahun: "1960",
-      linkRef:
-        "https://upload.wikimedia.org/wikipedia/id/5/5c/Mockingbirdfirst.JPG?utm_source=id.wikipedia.org&utm_campaign=index&utm_content=original",
-      kat: "fiksi",
-    },
-  ]);
+  /*Membuat useState dengan nilai awalnya 5 buku 
+  Sekaligus memuat data sebelumnya dengan localStorage*/
+  const [listBuku, setListBuku] = useState(() => {
+    const dataTersimpan = localStorage.getItem("dataBukuLokal");
+    if (dataTersimpan) {
+      return JSON.parse(dataTersimpan);
+    }
+    return [
+      {
+        judul: "Bumi Manusia",
+        penulis: "Pramoedya Ananta Toer",
+        tahun: "1980",
+        linkRef:
+          "https://static.mizanstore.com/d/img/book/cover/bumi-manusia.jpg",
+        kat: "fiksi",
+      },
+      {
+        judul: "Laskar Pelangi",
+        penulis: "Andrea Hirata",
+        tahun: "2005",
+        linkRef:
+          "https://ensiklopedia.kemendikdasmen.go.id/sastra/media/image/Karya-LASKAR_PELANGI.png",
+        kat: "non-fiksi",
+      },
+      {
+        judul: "Reverend Insanity",
+        penulis: "Gu Zhen Ren",
+        tahun: "2015",
+        linkRef:
+          "https://cdna.artstation.com/p/assets/images/images/085/188/238/large/ullaseu-imadfge.jpg?1740166168",
+        kat: "fiksi",
+      },
+      {
+        judul: "The Great Gatsby",
+        penulis: "F. Scott Fitzgerald",
+        tahun: "1925",
+        linkRef:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSatXfbE5JcI50jTgSP7AeP9Ll9l8UfoOy2BhbcPIP_JQ&s=10",
+        kat: "non-fiksi",
+      },
+      {
+        judul: "To Kill a Mockingbird",
+        penulis: "Harper Lee",
+        tahun: "1960",
+        linkRef:
+          "https://upload.wikimedia.org/wikipedia/id/5/5c/Mockingbirdfirst.JPG?utm_source=id.wikipedia.org&utm_campaign=index&utm_content=original",
+        kat: "fiksi",
+      },
+    ];
+  });
+  useEffect(() => {
+    localStorage.setItem("dataBukuLokal", JSON.stringify(listBuku));
+  }, [listBuku]);
 
   {
     /*State untuk mengatur apakah suatu form untuk menambahkan buku ditampilkan atau tidak */
@@ -259,7 +271,7 @@ export function Contents() {
                 />
               </div>
             );
-        })
+          })
         ) : (
           <p>Tidak ada buku yang tersedia.</p>
         )}
