@@ -1,0 +1,19 @@
+.contact {
+    display:flex;
+    flex-direction:column;
+    padding:10px;
+    background-color: bisque;
+
+    color:black;
+    border-radius: 8px;
+}
+
+.devs {
+    border-top: 2px solid black;
+    height: 50%;
+}
+
+.devs-item {
+    border: 2px solid black;
+    height: 50%;
+}

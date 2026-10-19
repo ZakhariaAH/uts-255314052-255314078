@@ -1,0 +1,33 @@
+.detail-buku-container {
+  padding: 30px;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  color: #293b4b;
+}
+
+.tombol-kembali {
+  color: #293b4b;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.detail-buku-card {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+.detail-buku-gambar {
+  width: 180px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.detail-buku-deskripsi {
+  text-align: justify;
+  line-height: 1.5;
+}
