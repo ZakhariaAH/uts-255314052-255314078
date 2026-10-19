@@ -11,8 +11,9 @@ function App() {
     penulis: "",
     tahun: "",
     linkRef: "",
+    kat: "fiksi",
   });
-
+  const [filter, setFilter] = useState("semua"); //Membuat use state untuk filter, nanti ada Semua/Fiksi/Non-FIksi
   /*Membuat useState dengan nilai awalnya 5 buku */
   const [listBuku, setListBuku] = useState([
     {
@@ -21,6 +22,7 @@ function App() {
       tahun: "1980",
       linkRef:
         "https://static.mizanstore.com/d/img/book/cover/bumi-manusia.jpg",
+      kat: "fiksi",
     },
     {
       judul: "Laskar Pelangi",
@@ -28,6 +30,7 @@ function App() {
       tahun: "2005",
       linkRef:
         "https://ensiklopedia.kemendikdasmen.go.id/sastra/media/image/Karya-LASKAR_PELANGI.png",
+      kat: "non-fiksi",
     },
     {
       judul: "Reverend Insanity",
@@ -35,6 +38,7 @@ function App() {
       tahun: "2015",
       linkRef:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1npxQjKEN-D9puxCZ_gX4e7SdWWr94001Y-UIauk&usqp=CAE&s",
+      kat: "fiksi",
     },
     {
       judul: "The Great Gatsby",
@@ -42,6 +46,7 @@ function App() {
       tahun: "1925",
       linkRef:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSatXfbE5JcI50jTgSP7AeP9Ll9l8UfoOy2BhbcPIP_JQ&s=10",
+      kat: "non-fiksi",
     },
     {
       judul: "To Kill a Mockingbird",
@@ -49,6 +54,7 @@ function App() {
       tahun: "1960",
       linkRef:
         "https://upload.wikimedia.org/wikipedia/id/5/5c/Mockingbirdfirst.JPG?utm_source=id.wikipedia.org&utm_campaign=index&utm_content=original",
+      kat: "fiksi",
     },
   ]);
 
@@ -80,7 +86,7 @@ function App() {
       return;
     }
 
-    setListBuku((prevListBuku) =>[...prevListBuku, buku]); //Masukkan buku ke listBuku
+    setListBuku((prevListBuku) => [...prevListBuku, buku]); //Masukkan buku ke listBuku
 
     setBuku({
       //set state form untuk yang membuat buku baru ke posisi awal agar siap menerima input lagi
@@ -88,9 +94,19 @@ function App() {
       penulis: "",
       tahun: "",
       linkRef: "",
+      kat: "",
     });
     setTampil(false);
   }
+
+  //variabel yang menyimpan array dari buku yang ditampilkan
+  const bukuTampil = listBuku.filter((item) => {
+    if (filter === "semua") {
+      return true; //return true, jadinya menampilkan semua
+    } else {
+      return item.kat === filter; //return hanya yang kategorinya sama dengan filter
+    }
+  });
   return (
     <>
       <div className="grid-buku">
@@ -100,60 +116,93 @@ function App() {
 
         <div className="contents">
           <div className="grid-buku-navigasi">
-            <button onClick={() => setTampil(!tampil)}>{/*Ketika diklik, membuat tampil menjadi true */}
-              {tampil ? "Menampilkan Form" : "Tidak Menampilkan Form"}{/*Jika tampil = true, maka tampilkan form
+            <button onClick={() => setTampil(!tampil)}>
+              {/*Ketika diklik, membuat tampil menjadi true */}
+              {tampil ? "Menampilkan Form" : "Tidak Menampilkan Form"}
+              {/*Jika tampil = true, maka tampilkan form
               jika tidak, maka tidak menampilkan form */}
             </button>
 
-            {tampil && (<form className="form-tambah-buku" onSubmit={inputForm} noValidate>{/*(<form...) otomatis mempunyai nilai true
+            {tampil && (
+              <form
+                className="form-tambah-buku"
+                onSubmit={inputForm}
+                noValidate
+              >
+                {/*(<form...) otomatis mempunyai nilai true
             dan jika tampilnya true, maka menampilkan form dan sebaliknya*/}
-              <h3>Tambah Buku:</h3>
-              <label>Judul:</label>
-              <input //input untuk judul buku
-                onChange={handleInput}//pakai fungsi handleInput untuk menambahkan nama buku
-                placeholder="...Tuliskan nama/judul buku"
-                type="text"
-                name="judul"
-                value={buku.judul}
-                required
-              ></input>
+                <h3>Tambah Buku:</h3>
+                <label>Judul:</label>
+                <input //input untuk judul buku
+                  onChange={handleInput} //pakai fungsi handleInput untuk menambahkan nama buku
+                  placeholder="...Tuliskan nama/judul buku"
+                  type="text"
+                  name="judul"
+                  value={buku.judul}
+                  required
+                ></input>
 
-              <label>Nama Penulis:</label>
-              <input //input untuk judul penuluis
-                onChange={handleInput}
-                placeholder="...Tuliskan nama penulis"
-                type="text"
-                name="penulis"
-                value={buku.penulis}
-                required
-              ></input>
+                <label>Nama Penulis:</label>
+                <input //input untuk judul penuluis
+                  onChange={handleInput}
+                  placeholder="...Tuliskan nama penulis"
+                  type="text"
+                  name="penulis"
+                  value={buku.penulis}
+                  required
+                ></input>
 
-              <label>Tahun Release:</label>
-              <input //input untuk tahun
-                onChange={handleInput}
-                placeholder="...Tuliskan tahun buku dikeluarkan"
-                type="text"
-                name="tahun"
-                value={buku.tahun}
-                required
-              ></input>
+                <label>Tahun Release:</label>
+                <input //input untuk tahun
+                  onChange={handleInput}
+                  placeholder="...Tuliskan tahun buku dikeluarkan"
+                  type="text"
+                  name="tahun"
+                  value={buku.tahun}
+                  required
+                ></input>
 
-              <label>Link Gambar Cover Buku:</label>
-              <input //input untuk linRef
-                onChange={handleInput}
-                placeholder="...Input link referensi gambar"
-                type="text"
-                name="linkRef"
-                value={buku.linkRef}
-                required
-              ></input>
+                <label>Link Gambar Cover Buku:</label>
+                <input //input untuk linRef
+                  onChange={handleInput}
+                  placeholder="...Input link referensi gambar"
+                  type="text"
+                  name="linkRef"
+                  value={buku.linkRef}
+                  required
+                ></input>
 
-              <button type="submit">Simpan Buku</button>
-            </form>)}
+                <label>Kateogri</label>
+                <input //input untuk linRef
+                  onChange={handleInput}
+                  placeholder="semua/fiksi/non-fiksi"
+                  type="text"
+                  name="kat"
+                  value={buku.kat}
+                  required
+                ></input>
+
+
+                <button type="submit">Simpan Buku</button>
+              </form>
+            )}
+            <div className="filter-wrapper">
+            <h3>Filter:</h3>
+              <button type="button" onClick={() => setFilter("semua")}>
+                Semua
+              </button>
+              <button type="button" onClick={() => setFilter("fiksi")}>
+                Fiksi
+              </button>
+              <button type="button" onClick={() => setFilter("non-fiksi")}>
+                Non-Fiksi
+              </button>
+            </div>
           </div>
           <div className="grid-buku-item">
-            {listBuku.length > 0 ? (
-              listBuku.map((item, index) => (
+            {bukuTampil.length > 0 ? (//sekarang diambil dari bukuTampil, bukan listBuku
+            //karena bukuTampil berisi buku yang ingin ditampilkan berdasarkan hasil filter
+              bukuTampil.map((item, index) => (
                 <div key={index}>
                   <KartuBuku
                     judul={item.judul}
