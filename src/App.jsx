@@ -11,7 +11,6 @@ function App() {
     <>
       <div className="grid-buku">
         <Header />
-
         {/*navbar untuk pindah halaman*/}
         <nav className="navbar">
           <Link to="/" className="nav-link">
